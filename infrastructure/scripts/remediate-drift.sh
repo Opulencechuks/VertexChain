@@ -10,7 +10,7 @@ LOCK_TABLE="vertexchain-terraform-locks"
 LOCK_ID="drift-remediation-lock"
 LOCK_TTL=3600
 NOTIFICATION_WEBHOOK="${NOTIFICATION_WEBHOOK:-}"
-GITHUB_REPO="${GITHUB_REPO:-PinSpace-Org/VertexChain}"
+GITHUB_REPO="${GITHUB_REPO:-VertexChainLabs/VertexChain}"
 APPROVAL_TIMEOUT="${APPROVAL_TIMEOUT:-3600}"
 
 RED='\033[0;31m'
