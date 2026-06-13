@@ -282,9 +282,7 @@ export default function ReportBuilder({ heading, description }: ReportBuilderPro
             }
           >
             {widgets.map((widget) => (
-              <div key={widget.i}>
-                <WidgetCard widget={widget} onRemove={removeWidget} />
-              </div>
+              <WidgetCard key={widget.i} widget={widget} onRemove={removeWidget} />
             ))}
           </GridLayout>
 
