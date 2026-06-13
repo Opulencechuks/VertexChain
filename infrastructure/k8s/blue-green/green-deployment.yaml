@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gistpin-green
+  name: vertexchain-green
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: gistpin
+      app: vertexchain
       version: green
   template:
     metadata:
       labels:
-        app: gistpin
+        app: vertexchain
         version: green
     spec:
       containers:
-        - name: gistpin
-          image: gistpin:green
+        - name: vertexchain
+          image: vertexchain:green
           ports:
             - containerPort: 3000

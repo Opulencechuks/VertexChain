@@ -1,13 +1,13 @@
-# KEDA ScaledObject — GistPin Frontend
+# KEDA ScaledObject — VertexChain Frontend
 # Scales frontend based on active user requests and cron schedule
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: frontend-scaledobject
-  namespace: gistpin-prod
+  namespace: vertexchain-prod
   labels:
-    app.kubernetes.io/name: gistpin-frontend
-    app.kubernetes.io/part-of: gistpin
+    app.kubernetes.io/name: vertexchain-frontend
+    app.kubernetes.io/part-of: vertexchain
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -24,10 +24,10 @@ spec:
     # Prometheus metric: HTTP requests per second
     - type: prometheus
       metadata:
-        serverAddress: http://prometheus-server.gistpin-monitoring.svc.cluster.local:9090
+        serverAddress: http://prometheus-server.vertexchain-monitoring.svc.cluster.local:9090
         metricName: frontend_http_requests_per_second
         query: |
-          sum(rate(http_requests_total{app="gistpin-frontend"}[2m]))
+          sum(rate(http_requests_total{app="vertexchain-frontend"}[2m]))
         threshold: "200"
 
     # Cron-based scaling — business hours

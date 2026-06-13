@@ -1,26 +1,26 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: gistpin-ingress
-  namespace: gistpin
+  name: vertexchain-ingress
+  namespace: vertexchain
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/limit-rps: "20"
     nginx.ingress.kubernetes.io/limit-burst-multiplier: "3"
-    nginx.ingress.kubernetes.io/cors-allow-origin: "https://gistpin.app,https://www.gistpin.app"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://vertexchain.app,https://www.vertexchain.app"
     nginx.ingress.kubernetes.io/cors-allow-methods: "GET,POST,PUT,PATCH,DELETE,OPTIONS"
     nginx.ingress.kubernetes.io/cors-allow-headers: "Authorization,Content-Type,Accept"
     nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
   tls:
     - hosts:
-        - gistpin.app
-        - api.gistpin.app
-      secretName: gistpin-tls
+        - vertexchain.app
+        - api.vertexchain.app
+      secretName: vertexchain-tls
   rules:
-    - host: gistpin.app
+    - host: vertexchain.app
       http:
         paths:
           - path: /
@@ -30,7 +30,7 @@ spec:
                 name: frontend-service
                 port:
                   number: 80
-    - host: api.gistpin.app
+    - host: api.vertexchain.app
       http:
         paths:
           - path: /

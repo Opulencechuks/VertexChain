@@ -10,10 +10,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - dashboard.gistpin.io
+        - dashboard.vertexchain.io
       secretName: dashboard-tls
   rules:
-    - host: dashboard.gistpin.io
+    - host: dashboard.vertexchain.io
       http:
         paths:
           - path: /

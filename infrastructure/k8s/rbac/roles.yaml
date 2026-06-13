@@ -2,7 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: backend-role
-  namespace: gistpin-prod
+  namespace: vertexchain-prod
 rules:
   - apiGroups: [""]
     resources: ["configmaps", "secrets"]
@@ -15,7 +15,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: frontend-role
-  namespace: gistpin-prod
+  namespace: vertexchain-prod
 rules:
   - apiGroups: [""]
     resources: ["configmaps"]

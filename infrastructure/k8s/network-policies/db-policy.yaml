@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: db-isolation-policy
-  namespace: gistpin-prod
+  namespace: vertexchain-prod
 spec:
   podSelector:
     matchLabels:
@@ -11,7 +11,7 @@ spec:
     - from:
         - podSelector:
             matchLabels:
-              app: gistpin-backend
+              app: vertexchain-backend
       ports:
         - protocol: TCP
           port: 5432
@@ -19,7 +19,7 @@ spec:
     - to:
         - podSelector:
             matchLabels:
-              app: gistpin-backend
+              app: vertexchain-backend
       ports:
         - protocol: TCP
           port: 10250

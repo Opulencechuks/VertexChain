@@ -1,11 +1,11 @@
-# GistPin Helm Chart
+# VertexChain Helm Chart
 
-Packages the full GistPin stack — NestJS backend API, Next.js analytics dashboard, and a PostGIS-enabled PostgreSQL database — into a single installable Helm chart.
+Packages the full VertexChain stack — NestJS backend API, Next.js analytics dashboard, and a PostGIS-enabled PostgreSQL database — into a single installable Helm chart.
 
 ## Chart structure
 
 ```
-infrastructure/k8s/helm/gistpin/
+infrastructure/k8s/helm/vertexchain/
 ├── Chart.yaml                   # Chart metadata and dependencies
 ├── values.yaml                  # Default values (all overridable)
 ├── README.md                    # This file
@@ -38,11 +38,11 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 
 # 2. Fetch sub-chart dependencies
-helm dependency update ./infrastructure/k8s/helm/gistpin
+helm dependency update ./infrastructure/k8s/helm/vertexchain
 
-# 3. Install to the gistpin namespace
-helm upgrade --install gistpin ./infrastructure/k8s/helm/gistpin \
-  --namespace gistpin --create-namespace \
+# 3. Install to the vertexchain namespace
+helm upgrade --install vertexchain ./infrastructure/k8s/helm/vertexchain \
+  --namespace vertexchain --create-namespace \
   --set backend.image.tag=sha-<commit>
 ```
 
@@ -82,13 +82,13 @@ backend:
     SOROBAN_RPC_URL: https://soroban-mainnet.stellar.org
     STELLAR_NETWORK_PASSPHRASE: "Public Global Stellar Network ; September 2015"
     CONTRACT_ID_GIST_REGISTRY: "CXXXX..."
-    CORS_ORIGINS: "https://app.gistpin.io"
-  existingSecret: gistpin-backend-secret   # managed by external-secrets
+    CORS_ORIGINS: "https://app.vertexchain.io"
+  existingSecret: vertexchain-backend-secret   # managed by external-secrets
 
 analytics:
   replicaCount: 2
   env:
-    NEXT_PUBLIC_API_URL: https://api.gistpin.io
+    NEXT_PUBLIC_API_URL: https://api.vertexchain.io
 
 ingress:
   enabled: true
@@ -96,10 +96,10 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
   tls:
-    - secretName: gistpin-tls
+    - secretName: vertexchain-tls
       hosts:
-        - api.gistpin.io
-        - analytics.gistpin.io
+        - api.vertexchain.io
+        - analytics.vertexchain.io
 
 postgresql:
   enabled: false   # use a managed database in production
@@ -108,8 +108,8 @@ postgresql:
 Then install with:
 
 ```bash
-helm upgrade --install gistpin ./infrastructure/k8s/helm/gistpin \
-  --namespace gistpin --create-namespace \
+helm upgrade --install vertexchain ./infrastructure/k8s/helm/vertexchain \
+  --namespace vertexchain --create-namespace \
   -f values.prod.yaml
 ```
 
@@ -125,22 +125,22 @@ For production, avoid putting plaintext passwords in values files. Options:
 
 ```bash
 # Bump chart version in Chart.yaml, then:
-helm upgrade gistpin ./infrastructure/k8s/helm/gistpin \
-  --namespace gistpin \
+helm upgrade vertexchain ./infrastructure/k8s/helm/vertexchain \
+  --namespace vertexchain \
   --set backend.image.tag=sha-<new-commit>
 ```
 
 ## Rollback
 
 ```bash
-helm history gistpin -n gistpin
-helm rollback gistpin <revision> -n gistpin
+helm history vertexchain -n vertexchain
+helm rollback vertexchain <revision> -n vertexchain
 ```
 
 ## Uninstall
 
 ```bash
-helm uninstall gistpin -n gistpin
+helm uninstall vertexchain -n vertexchain
 # PVCs are NOT deleted automatically; remove manually if needed:
-kubectl delete pvc -n gistpin -l app.kubernetes.io/instance=gistpin
+kubectl delete pvc -n vertexchain -l app.kubernetes.io/instance=vertexchain
 ```

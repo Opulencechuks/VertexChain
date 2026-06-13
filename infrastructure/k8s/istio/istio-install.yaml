@@ -1,17 +1,17 @@
 ---
 # ──────────────────────────────────────────────────────────────────────────────
-# GistPin — Istio Installation
+# VertexChain — Istio Installation
 #
 # Apply order:
 #   1. kubectl create namespace istio-system
 #   2. kubectl apply -f istio-install.yaml
-#   3. kubectl label namespace gistpin istio-injection=enabled
+#   3. kubectl label namespace vertexchain istio-injection=enabled
 # ──────────────────────────────────────────────────────────────────────────────
 
 apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 metadata:
-  name: gistpin-istio
+  name: vertexchain-istio
   namespace: istio-system
 spec:
   # Pinned to a stable release; bump in Chart.yaml / renovate as needed
@@ -122,11 +122,11 @@ data:
             action: keep
             regex: istio-telemetry;prometheus
 
-      - job_name: 'gistpin-services'
+      - job_name: 'vertexchain-services'
         kubernetes_sd_configs:
           - role: pod
             namespaces:
-              names: [gistpin]
+              names: [vertexchain]
         relabel_configs:
           - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
             action: keep
@@ -142,23 +142,23 @@ data:
             target_label: __address__
 
 ---
-# PeerAuthentication — enforce STRICT mTLS across the gistpin namespace
+# PeerAuthentication — enforce STRICT mTLS across the vertexchain namespace
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
 metadata:
-  name: gistpin-mtls
-  namespace: gistpin
+  name: vertexchain-mtls
+  namespace: vertexchain
 spec:
   mtls:
     mode: STRICT
 
 ---
-# Gateway — single ingress entry point for all GistPin HTTP/HTTPS traffic
+# Gateway — single ingress entry point for all VertexChain HTTP/HTTPS traffic
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: gistpin-gateway
-  namespace: gistpin
+  name: vertexchain-gateway
+  namespace: vertexchain
 spec:
   selector:
     istio: ingressgateway
@@ -168,8 +168,8 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - "gistpin.io"
-        - "*.gistpin.io"
+        - "vertexchain.io"
+        - "*.vertexchain.io"
       # Redirect all HTTP → HTTPS in production
       tls:
         httpsRedirect: true
@@ -180,7 +180,7 @@ spec:
         protocol: HTTPS
       tls:
         mode: SIMPLE
-        credentialName: gistpin-tls   # K8s Secret with TLS cert/key
+        credentialName: vertexchain-tls   # K8s Secret with TLS cert/key
       hosts:
-        - "gistpin.io"
-        - "*.gistpin.io"
+        - "vertexchain.io"
+        - "*.vertexchain.io"

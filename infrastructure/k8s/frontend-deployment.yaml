@@ -2,22 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend-deployment
-  namespace: gistpin
+  namespace: vertexchain
   labels:
-    app: gistpin-frontend
+    app: vertexchain-frontend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: gistpin-frontend
+      app: vertexchain-frontend
   template:
     metadata:
       labels:
-        app: gistpin-frontend
+        app: vertexchain-frontend
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/pinspace-org/gistpin-frontend:latest
+          image: ghcr.io/pinspace-org/vertexchain-frontend:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
@@ -29,7 +29,7 @@ spec:
             - name: PORT
               value: "3000"
             - name: CDN_BASE_URL
-              value: https://cdn.gistpin.app
+              value: https://cdn.vertexchain.app
           resources:
             requests:
               cpu: "250m"

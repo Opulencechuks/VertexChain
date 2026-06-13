@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: egress-allowlist
-  namespace: gistpin-dev
+  namespace: vertexchain-dev
 spec:
   podSelector: {}
   policyTypes:
@@ -25,7 +25,7 @@ spec:
     - to:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: gistpin-dev
+              kubernetes.io/metadata.name: vertexchain-dev
       ports:
         - protocol: TCP
           port: 53
@@ -50,7 +50,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: egress-allowlist
-  namespace: gistpin-staging
+  namespace: vertexchain-staging
 spec:
   podSelector: {}
   policyTypes:
@@ -73,7 +73,7 @@ spec:
     - to:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: gistpin-staging
+              kubernetes.io/metadata.name: vertexchain-staging
       ports:
         - protocol: TCP
           port: 53
@@ -98,7 +98,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: egress-allowlist
-  namespace: gistpin-prod
+  namespace: vertexchain-prod
 spec:
   podSelector: {}
   policyTypes:
@@ -121,7 +121,7 @@ spec:
     - to:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: gistpin-prod
+              kubernetes.io/metadata.name: vertexchain-prod
       ports:
         - protocol: TCP
           port: 53
@@ -146,18 +146,18 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: egress-allowlist-backend
-  namespace: gistpin-dev
+  namespace: vertexchain-dev
 spec:
   podSelector:
     matchLabels:
-      app: gistpin-backend
+      app: vertexchain-backend
   policyTypes:
     - Egress
   egress:
     - to:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: gistpin-dev
+              kubernetes.io/metadata.name: vertexchain-dev
       ports:
         - protocol: TCP
           port: 53
@@ -168,18 +168,18 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: egress-allowlist-backend
-  namespace: gistpin-staging
+  namespace: vertexchain-staging
 spec:
   podSelector:
     matchLabels:
-      app: gistpin-backend
+      app: vertexchain-backend
   policyTypes:
     - Egress
   egress:
     - to:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: gistpin-staging
+              kubernetes.io/metadata.name: vertexchain-staging
       ports:
         - protocol: TCP
           port: 53
@@ -190,18 +190,18 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: egress-allowlist-backend
-  namespace: gistpin-prod
+  namespace: vertexchain-prod
 spec:
   podSelector:
     matchLabels:
-      app: gistpin-backend
+      app: vertexchain-backend
   policyTypes:
     - Egress
   egress:
     - to:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: gistpin-prod
+              kubernetes.io/metadata.name: vertexchain-prod
       ports:
         - protocol: TCP
           port: 53
@@ -212,18 +212,18 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: egress-allowlist-frontend
-  namespace: gistpin-dev
+  namespace: vertexchain-dev
 spec:
   podSelector:
     matchLabels:
-      app: gistpin-frontend
+      app: vertexchain-frontend
   policyTypes:
     - Egress
   egress:
     - to:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: gistpin-dev
+              kubernetes.io/metadata.name: vertexchain-dev
       ports:
         - protocol: TCP
           port: 53
@@ -234,18 +234,18 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: egress-allowlist-frontend
-  namespace: gistpin-staging
+  namespace: vertexchain-staging
 spec:
   podSelector:
     matchLabels:
-      app: gistpin-frontend
+      app: vertexchain-frontend
   policyTypes:
     - Egress
   egress:
     - to:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: gistpin-staging
+              kubernetes.io/metadata.name: vertexchain-staging
       ports:
         - protocol: TCP
           port: 53
@@ -256,18 +256,18 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: egress-allowlist-frontend
-  namespace: gistpin-prod
+  namespace: vertexchain-prod
 spec:
   podSelector:
     matchLabels:
-      app: gistpin-frontend
+      app: vertexchain-frontend
   policyTypes:
     - Egress
   egress:
     - to:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: gistpin-prod
+              kubernetes.io/metadata.name: vertexchain-prod
       ports:
         - protocol: TCP
           port: 53

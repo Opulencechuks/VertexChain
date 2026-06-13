@@ -1,6 +1,6 @@
 ---
 # ──────────────────────────────────────────────────────────────────────────────
-# GistPin — Virtual Services
+# VertexChain — Virtual Services
 #
 # Defines L7 routing, retries, timeouts, fault injection guards, and
 # canary / traffic-split rules for each service in the mesh.
@@ -11,13 +11,13 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: backend
-  namespace: gistpin
+  namespace: vertexchain
 spec:
   hosts:
     - backend               # K8s Service name (cluster-internal)
-    - api.gistpin.io        # External host via Gateway
+    - api.vertexchain.io        # External host via Gateway
   gateways:
-    - gistpin-gateway       # Applies to external ingress
+    - vertexchain-gateway       # Applies to external ingress
     - mesh                  # Also applies to internal east-west traffic
   http:
     # ── Health / readiness bypass (no retries needed) ────────────────────────
@@ -76,14 +76,14 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: frontend
-  namespace: gistpin
+  namespace: vertexchain
 spec:
   hosts:
     - frontend
-    - gistpin.io
-    - www.gistpin.io
+    - vertexchain.io
+    - www.vertexchain.io
   gateways:
-    - gistpin-gateway
+    - vertexchain-gateway
     - mesh
   http:
     # ── Static assets — aggressive caching headers (handled upstream) ────────
@@ -118,13 +118,13 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: analytics
-  namespace: gistpin
+  namespace: vertexchain
 spec:
   hosts:
     - analytics
-    - analytics.gistpin.io
+    - analytics.vertexchain.io
   gateways:
-    - gistpin-gateway
+    - vertexchain-gateway
     - mesh
   http:
     # ── Ingestion endpoint — high-throughput, low timeout ────────────────────
@@ -166,7 +166,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: stellar-rpc-egress
-  namespace: gistpin
+  namespace: vertexchain
 spec:
   hosts:
     - horizon.stellar.org

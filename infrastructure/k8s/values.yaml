@@ -1,7 +1,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
-# GistPin Helm values
+# VertexChain Helm values
 # Override any key with --set or a custom values file:
-#   helm upgrade --install gistpin ./gistpin -f values.prod.yaml
+#   helm upgrade --install vertexchain ./vertexchain -f values.prod.yaml
 # ─────────────────────────────────────────────────────────────────────────────
 
 # ---------------------------------------------------------------------------
@@ -21,7 +21,7 @@ backend:
   enabled: true
 
   image:
-    repository: ghcr.io/pinspace-org/gistpin
+    repository: ghcr.io/pinspace-org/vertexchain
     tag: ""          # defaults to .Chart.AppVersion when empty
     pullPolicy: IfNotPresent
 
@@ -111,7 +111,7 @@ analytics:
   enabled: true
 
   image:
-    repository: ghcr.io/pinspace-org/gistpin-analytics
+    repository: ghcr.io/pinspace-org/vertexchain-analytics
     tag: ""
     pullPolicy: IfNotPresent
 
@@ -151,7 +151,7 @@ analytics:
     periodSeconds: 10
 
   env:
-    NEXT_PUBLIC_API_URL: ""  # e.g. https://api.gistpin.io
+    NEXT_PUBLIC_API_URL: ""  # e.g. https://api.vertexchain.io
 
   nodeSelector: {}
   tolerations: []
@@ -169,22 +169,22 @@ ingress:
   # cert-manager.io/cluster-issuer: letsencrypt-prod
 
   hosts:
-    - host: api.gistpin.io
+    - host: api.vertexchain.io
       serviceName: backend
       paths:
         - path: /
           pathType: Prefix
-    - host: analytics.gistpin.io
+    - host: analytics.vertexchain.io
       serviceName: analytics
       paths:
         - path: /
           pathType: Prefix
 
   tls: []
-  # - secretName: gistpin-tls
+  # - secretName: vertexchain-tls
   #   hosts:
-  #     - api.gistpin.io
-  #     - analytics.gistpin.io
+  #     - api.vertexchain.io
+  #     - analytics.vertexchain.io
 
 # ---------------------------------------------------------------------------
 # PostgreSQL (Bitnami sub-chart)
@@ -197,7 +197,7 @@ postgresql:
   auth:
     database: gist
     username: gist
-    # existingSecret: gistpin-postgresql  # override with an existing secret
+    # existingSecret: vertexchain-postgresql  # override with an existing secret
     password: "changeme"     # only used when existingSecret is unset
     postgresPassword: "changeme"
 

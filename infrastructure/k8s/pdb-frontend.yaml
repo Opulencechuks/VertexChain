@@ -2,9 +2,9 @@ apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: frontend-pdb
-  namespace: gistpin-prod
+  namespace: vertexchain-prod
 spec:
   minAvailable: 1
   selector:
     matchLabels:
-      app: gistpin-frontend
+      app: vertexchain-frontend

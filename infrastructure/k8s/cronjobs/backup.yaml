@@ -1,10 +1,10 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: gistpin-backup
-  namespace: gistpin-prod
+  name: vertexchain-backup
+  namespace: vertexchain-prod
   labels:
-    app: gistpin
+    app: vertexchain
     component: backup
     managed-by: cronjob
 spec:
@@ -18,7 +18,7 @@ spec:
   jobTemplate:
     metadata:
       labels:
-        app: gistpin
+        app: vertexchain
         component: backup
     spec:
       backoffLimit: 2             # Retry up to 2 times before marking failed
@@ -27,13 +27,13 @@ spec:
       template:
         metadata:
           labels:
-            app: gistpin
+            app: vertexchain
             component: backup
           annotations:
             sidecar.istio.io/inject: "false"   # No mesh sidecar needed for batch
         spec:
           restartPolicy: OnFailure
-          serviceAccountName: gistpin-backup-sa
+          serviceAccountName: vertexchain-backup-sa
 
           # ── Init: verify connectivity before the main backup ──────────────
           initContainers:
@@ -51,17 +51,17 @@ spec:
                 - name: PGHOST
                   valueFrom:
                     secretKeyRef:
-                      name: gistpin-db-credentials
+                      name: vertexchain-db-credentials
                       key: host
                 - name: PGUSER
                   valueFrom:
                     secretKeyRef:
-                      name: gistpin-db-credentials
+                      name: vertexchain-db-credentials
                       key: username
                 - name: PGDATABASE
                   valueFrom:
                     secretKeyRef:
-                      name: gistpin-db-credentials
+                      name: vertexchain-db-credentials
                       key: database
               resources:
                 requests:
@@ -81,7 +81,7 @@ spec:
                 - |
                   set -euo pipefail
                   TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-                  BACKUP_FILE="/tmp/gistpin_${TIMESTAMP}.sql.gz"
+                  BACKUP_FILE="/tmp/vertexchain_${TIMESTAMP}.sql.gz"
 
                   echo "[backup] Dumping database to ${BACKUP_FILE}..."
                   PGPASSWORD="$PGPASSWORD" pg_dump \
@@ -92,7 +92,7 @@ spec:
                   echo "[backup] Uploading to s3://${S3_BUCKET}/postgres/${TIMESTAMP}/"
                   # Uses AWS CLI v2 bundled in the init step; assumes IRSA or env-based creds
                   aws s3 cp "$BACKUP_FILE" \
-                    "s3://${S3_BUCKET}/postgres/gistpin_${TIMESTAMP}.sql.gz" \
+                    "s3://${S3_BUCKET}/postgres/vertexchain_${TIMESTAMP}.sql.gz" \
                     --sse aws:kms \
                     --storage-class STANDARD_IA
 
@@ -109,32 +109,32 @@ spec:
                 - name: PGHOST
                   valueFrom:
                     secretKeyRef:
-                      name: gistpin-db-credentials
+                      name: vertexchain-db-credentials
                       key: host
                 - name: PGUSER
                   valueFrom:
                     secretKeyRef:
-                      name: gistpin-db-credentials
+                      name: vertexchain-db-credentials
                       key: username
                 - name: PGPASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: gistpin-db-credentials
+                      name: vertexchain-db-credentials
                       key: password
                 - name: PGDATABASE
                   valueFrom:
                     secretKeyRef:
-                      name: gistpin-db-credentials
+                      name: vertexchain-db-credentials
                       key: database
                 - name: S3_BUCKET
                   valueFrom:
                     configMapKeyRef:
-                      name: gistpin-backup-config
+                      name: vertexchain-backup-config
                       key: s3_bucket
                 - name: RETENTION_DAYS
                   valueFrom:
                     configMapKeyRef:
-                      name: gistpin-backup-config
+                      name: vertexchain-backup-config
                       key: retention_days
               resources:
                 requests:
@@ -158,17 +158,17 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: gistpin-backup-sa
-  namespace: gistpin-prod
+  name: vertexchain-backup-sa
+  namespace: vertexchain-prod
   annotations:
-    eks.amazonaws.com/role-arn: "arn:aws:iam::ACCOUNT_ID:role/gistpin-backup-role"
+    eks.amazonaws.com/role-arn: "arn:aws:iam::ACCOUNT_ID:role/vertexchain-backup-role"
 
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: gistpin-backup-config
-  namespace: gistpin-prod
+  name: vertexchain-backup-config
+  namespace: vertexchain-prod
 data:
-  s3_bucket: "gistpin-backups-prod"
+  s3_bucket: "vertexchain-backups-prod"
   retention_days: "30"

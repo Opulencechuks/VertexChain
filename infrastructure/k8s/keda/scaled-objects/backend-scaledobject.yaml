@@ -1,13 +1,13 @@
-# KEDA ScaledObject — GistPin Backend
+# KEDA ScaledObject — VertexChain Backend
 # Scales backend based on SQS queue depth, Prometheus metrics, and cron schedule
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: backend-scaledobject
-  namespace: gistpin-prod
+  namespace: vertexchain-prod
   labels:
-    app.kubernetes.io/name: gistpin-backend
-    app.kubernetes.io/part-of: gistpin
+    app.kubernetes.io/name: vertexchain-backend
+    app.kubernetes.io/part-of: vertexchain
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -24,7 +24,7 @@ spec:
     # Queue-based scaling — SQS gist processing queue
     - type: aws-sqs-queue
       metadata:
-        queueURL: https://sqs.us-east-1.amazonaws.com/123456789012/gistpin-gist-processing
+        queueURL: https://sqs.us-east-1.amazonaws.com/123456789012/vertexchain-gist-processing
         queueLength: "10"
         awsRegion: us-east-1
         identityOwner: operator
@@ -34,16 +34,16 @@ spec:
     # Metric-based scaling — HTTP request rate from Prometheus
     - type: prometheus
       metadata:
-        serverAddress: http://prometheus-server.gistpin-monitoring.svc.cluster.local:9090
+        serverAddress: http://prometheus-server.vertexchain-monitoring.svc.cluster.local:9090
         metricName: http_requests_per_second
         query: |
-          sum(rate(http_requests_total{app="gistpin-backend"}[2m]))
+          sum(rate(http_requests_total{app="vertexchain-backend"}[2m]))
         threshold: "100"
 
     # Database connection pool scaling
     - type: postgresql
       metadata:
-        query: "SELECT count(*) FROM pg_stat_activity WHERE state = 'active' AND datname = 'gistpin'"
+        query: "SELECT count(*) FROM pg_stat_activity WHERE state = 'active' AND datname = 'vertexchain'"
         targetQueryValue: "50"
         connectionFromEnv: POSTGRES_CONNECTION_STRING
       authenticationRef:

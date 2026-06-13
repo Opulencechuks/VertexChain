@@ -2,16 +2,16 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: backend-allow-policy
-  namespace: gistpin-prod
+  namespace: vertexchain-prod
 spec:
   podSelector:
     matchLabels:
-      app: gistpin-backend
+      app: vertexchain-backend
   ingress:
     - from:
         - podSelector:
             matchLabels:
-              app: gistpin-frontend
+              app: vertexchain-frontend
       ports:
         - protocol: TCP
           port: 3000

@@ -1,10 +1,10 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: gistpin-reports
-  namespace: gistpin-prod
+  name: vertexchain-reports
+  namespace: vertexchain-prod
   labels:
-    app: gistpin
+    app: vertexchain
     component: reports
     managed-by: cronjob
 spec:
@@ -18,7 +18,7 @@ spec:
   jobTemplate:
     metadata:
       labels:
-        app: gistpin
+        app: vertexchain
         component: reports
     spec:
       backoffLimit: 1
@@ -27,13 +27,13 @@ spec:
       template:
         metadata:
           labels:
-            app: gistpin
+            app: vertexchain
             component: reports
           annotations:
             sidecar.istio.io/inject: "false"
         spec:
           restartPolicy: OnFailure
-          serviceAccountName: gistpin-reports-sa
+          serviceAccountName: vertexchain-reports-sa
 
           initContainers:
             # Verify the analytics service is reachable before querying
@@ -44,7 +44,7 @@ spec:
                 - -c
                 - |
                   echo "[reports] Checking analytics service health..."
-                  curl -sf "http://analytics.gistpin-prod.svc.cluster.local/health" \
+                  curl -sf "http://analytics.vertexchain-prod.svc.cluster.local/health" \
                     || { echo "[reports] Analytics service unavailable"; exit 1; }
                   echo "[reports] Analytics service is ready."
               resources:
@@ -57,7 +57,7 @@ spec:
 
           containers:
             - name: report-generator
-              image: ghcr.io/pinspace-org/gistpin-reports:latest
+              image: ghcr.io/pinspace-org/vertexchain-reports:latest
               imagePullPolicy: Always
               command:
                 - sh
@@ -87,7 +87,7 @@ spec:
                     --input "$REPORT_FILE" \
                     --output "$REPORT_PDF" \
                     --template weekly \
-                    --title "GistPin Weekly Report — ${WEEK_START}"
+                    --title "VertexChain Weekly Report — ${WEEK_START}"
 
                   echo "[reports] PDF rendered at ${REPORT_PDF}"
 
@@ -104,7 +104,7 @@ spec:
                   curl -sf -X POST \
                     -H 'Content-type: application/json' \
                     --data "{
-                      \"text\": \":bar_chart: *GistPin Weekly Report* (${WEEK_START} to ${WEEK_END}) is ready.\",
+                      \"text\": \":bar_chart: *VertexChain Weekly Report* (${WEEK_START} to ${WEEK_END}) is ready.\",
                       \"attachments\": [{
                         \"text\": \"<${REPORT_URL}|Download PDF>\",
                         \"color\": \"#36a64f\"
@@ -115,21 +115,21 @@ spec:
                   echo "[reports] Slack notification sent. Done."
               env:
                 - name: ANALYTICS_URL
-                  value: "http://analytics.gistpin-prod.svc.cluster.local"
+                  value: "http://analytics.vertexchain-prod.svc.cluster.local"
                 - name: ANALYTICS_API_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: gistpin-reports-secrets
+                      name: vertexchain-reports-secrets
                       key: analytics_api_key
                 - name: S3_BUCKET
                   valueFrom:
                     configMapKeyRef:
-                      name: gistpin-reports-config
+                      name: vertexchain-reports-config
                       key: s3_bucket
                 - name: SLACK_WEBHOOK_URL
                   valueFrom:
                     secretKeyRef:
-                      name: gistpin-reports-secrets
+                      name: vertexchain-reports-secrets
                       key: slack_webhook_url
               resources:
                 requests:
@@ -152,16 +152,16 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: gistpin-reports-sa
-  namespace: gistpin-prod
+  name: vertexchain-reports-sa
+  namespace: vertexchain-prod
   annotations:
-    eks.amazonaws.com/role-arn: "arn:aws:iam::ACCOUNT_ID:role/gistpin-reports-role"
+    eks.amazonaws.com/role-arn: "arn:aws:iam::ACCOUNT_ID:role/vertexchain-reports-role"
 
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: gistpin-reports-config
-  namespace: gistpin-prod
+  name: vertexchain-reports-config
+  namespace: vertexchain-prod
 data:
-  s3_bucket: "gistpin-reports-prod"
+  s3_bucket: "vertexchain-reports-prod"

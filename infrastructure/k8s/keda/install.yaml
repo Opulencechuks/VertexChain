@@ -1,4 +1,4 @@
-# KEDA (Kubernetes Event-Driven Autoscaling) — GistPin Installation
+# KEDA (Kubernetes Event-Driven Autoscaling) — VertexChain Installation
 # Installs KEDA v2.14 with namespace, RBAC, CRDs, and core components
 ---
 apiVersion: v1
@@ -7,7 +7,7 @@ metadata:
   name: keda
   labels:
     app.kubernetes.io/name: keda
-    app.kubernetes.io/part-of: gistpin
+    app.kubernetes.io/part-of: vertexchain
 ---
 apiVersion: v1
 kind: ServiceAccount

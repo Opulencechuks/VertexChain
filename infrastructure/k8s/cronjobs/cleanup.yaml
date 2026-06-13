@@ -1,10 +1,10 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: gistpin-cleanup
-  namespace: gistpin-prod
+  name: vertexchain-cleanup
+  namespace: vertexchain-prod
   labels:
-    app: gistpin
+    app: vertexchain
     component: cleanup
     managed-by: cronjob
 spec:
@@ -18,7 +18,7 @@ spec:
   jobTemplate:
     metadata:
       labels:
-        app: gistpin
+        app: vertexchain
         component: cleanup
     spec:
       backoffLimit: 1
@@ -27,13 +27,13 @@ spec:
       template:
         metadata:
           labels:
-            app: gistpin
+            app: vertexchain
             component: cleanup
           annotations:
             sidecar.istio.io/inject: "false"
         spec:
           restartPolicy: OnFailure
-          serviceAccountName: gistpin-cleanup-sa
+          serviceAccountName: vertexchain-cleanup-sa
 
           containers:
             # ── Step 1: expired gist purge (SQL) ────────────────────────────
@@ -81,27 +81,27 @@ spec:
                 - name: PGHOST
                   valueFrom:
                     secretKeyRef:
-                      name: gistpin-db-credentials
+                      name: vertexchain-db-credentials
                       key: host
                 - name: PGUSER
                   valueFrom:
                     secretKeyRef:
-                      name: gistpin-db-credentials
+                      name: vertexchain-db-credentials
                       key: username
                 - name: PGPASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: gistpin-db-credentials
+                      name: vertexchain-db-credentials
                       key: password
                 - name: PGDATABASE
                   valueFrom:
                     secretKeyRef:
-                      name: gistpin-db-credentials
+                      name: vertexchain-db-credentials
                       key: database
                 - name: RETENTION_DAYS
                   valueFrom:
                     configMapKeyRef:
-                      name: gistpin-cleanup-config
+                      name: vertexchain-cleanup-config
                       key: retention_days
               resources:
                 requests:
@@ -141,17 +141,17 @@ spec:
                 - name: REDIS_HOST
                   valueFrom:
                     secretKeyRef:
-                      name: gistpin-redis-credentials
+                      name: vertexchain-redis-credentials
                       key: host
                 - name: REDIS_PORT
                   valueFrom:
                     secretKeyRef:
-                      name: gistpin-redis-credentials
+                      name: vertexchain-redis-credentials
                       key: port
                 - name: REDIS_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: gistpin-redis-credentials
+                      name: vertexchain-redis-credentials
                       key: password
               resources:
                 requests:
@@ -167,14 +167,14 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: gistpin-cleanup-sa
-  namespace: gistpin-prod
+  name: vertexchain-cleanup-sa
+  namespace: vertexchain-prod
 
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: gistpin-cleanup-config
-  namespace: gistpin-prod
+  name: vertexchain-cleanup-config
+  namespace: vertexchain-prod
 data:
   retention_days: "90"

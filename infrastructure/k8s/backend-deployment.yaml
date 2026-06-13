@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend-deployment
-  namespace: gistpin
+  namespace: vertexchain
   labels:
-    app: gistpin-backend
+    app: vertexchain-backend
 spec:
   replicas: 3
   strategy:
@@ -14,15 +14,15 @@ spec:
       maxSurge: 1
   selector:
     matchLabels:
-      app: gistpin-backend
+      app: vertexchain-backend
   template:
     metadata:
       labels:
-        app: gistpin-backend
+        app: vertexchain-backend
     spec:
       containers:
         - name: backend
-          image: ghcr.io/pinspace-org/gistpin-backend:latest
+          image: ghcr.io/pinspace-org/vertexchain-backend:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000

@@ -2,10 +2,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "gistpin.fullname" . }}-backend
+  name: {{ include "vertexchain.fullname" . }}-backend
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "gistpin.labels" . | nindent 4 }}
+    {{- include "vertexchain.labels" . | nindent 4 }}
     app.kubernetes.io/component: backend
   {{- with .Values.backend.podAnnotations }}
   annotations:
@@ -17,11 +17,11 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "gistpin.componentSelectorLabels" (dict "component" "backend" "root" .) | nindent 6 }}
+      {{- include "vertexchain.componentSelectorLabels" (dict "component" "backend" "root" .) | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "gistpin.componentSelectorLabels" (dict "component" "backend" "root" .) | nindent 8 }}
+        {{- include "vertexchain.componentSelectorLabels" (dict "component" "backend" "root" .) | nindent 8 }}
       {{- with .Values.backend.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
@@ -31,7 +31,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "gistpin.serviceAccountName" . }}
+      serviceAccountName: {{ include "vertexchain.serviceAccountName" . }}
       {{- with .Values.backend.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -51,28 +51,28 @@ spec:
           # Non-sensitive config from ConfigMap
           envFrom:
             - configMapRef:
-                name: {{ include "gistpin.fullname" . }}-backend-config
+                name: {{ include "vertexchain.fullname" . }}-backend-config
           # Sensitive values from Secret
           env:
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "gistpin.backendSecretName" . }}
+                  name: {{ include "vertexchain.backendSecretName" . }}
                   key: DATABASE_PASSWORD
             - name: PINATA_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "gistpin.backendSecretName" . }}
+                  name: {{ include "vertexchain.backendSecretName" . }}
                   key: PINATA_API_KEY
             - name: PINATA_SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "gistpin.backendSecretName" . }}
+                  name: {{ include "vertexchain.backendSecretName" . }}
                   key: PINATA_SECRET_KEY
             - name: STELLAR_SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "gistpin.backendSecretName" . }}
+                  name: {{ include "vertexchain.backendSecretName" . }}
                   key: STELLAR_SECRET_KEY
             {{- with .Values.backend.extraEnv }}
             {{- toYaml . | nindent 12 }}

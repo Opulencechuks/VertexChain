@@ -1,19 +1,19 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: gistpin-staging
+  name: vertexchain-staging
   labels:
     env: staging
-    team: gistpin
+    team: vertexchain
 
 ---
 apiVersion: v1
 kind: ResourceQuota
 metadata:
-  name: gistpin-staging-quota
-  namespace: gistpin-staging
+  name: vertexchain-staging-quota
+  namespace: vertexchain-staging
   annotations:
-    quota.gistpin.io/alert-threshold: "75"
+    quota.vertexchain.io/alert-threshold: "75"
 spec:
   hard:
     # Compute
@@ -44,8 +44,8 @@ spec:
 apiVersion: v1
 kind: LimitRange
 metadata:
-  name: gistpin-staging-limits
-  namespace: gistpin-staging
+  name: vertexchain-staging-limits
+  namespace: vertexchain-staging
 spec:
   limits:
     - type: Container
@@ -77,73 +77,73 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: gistpin-staging-quota-alerts
-  namespace: gistpin-staging
+  name: vertexchain-staging-quota-alerts
+  namespace: vertexchain-staging
   labels:
     prometheus: kube-prometheus
     role: alert-rules
 spec:
   groups:
-    - name: gistpin-staging-quota
+    - name: vertexchain-staging-quota
       interval: 60s
       rules:
         - alert: StagingCpuRequestQuotaHigh
           expr: |
-            kube_resourcequota{namespace="gistpin-staging", resource="requests.cpu", type="used"}
-            / kube_resourcequota{namespace="gistpin-staging", resource="requests.cpu", type="hard"} > 0.75
+            kube_resourcequota{namespace="vertexchain-staging", resource="requests.cpu", type="used"}
+            / kube_resourcequota{namespace="vertexchain-staging", resource="requests.cpu", type="hard"} > 0.75
           for: 5m
           labels:
             severity: warning
             env: staging
           annotations:
             summary: "Staging CPU request quota above 75 %"
-            description: "gistpin-staging CPU request quota at {{ $value | humanizePercentage }}."
+            description: "vertexchain-staging CPU request quota at {{ $value | humanizePercentage }}."
 
         - alert: StagingMemoryRequestQuotaHigh
           expr: |
-            kube_resourcequota{namespace="gistpin-staging", resource="requests.memory", type="used"}
-            / kube_resourcequota{namespace="gistpin-staging", resource="requests.memory", type="hard"} > 0.75
+            kube_resourcequota{namespace="vertexchain-staging", resource="requests.memory", type="used"}
+            / kube_resourcequota{namespace="vertexchain-staging", resource="requests.memory", type="hard"} > 0.75
           for: 5m
           labels:
             severity: warning
             env: staging
           annotations:
             summary: "Staging memory request quota above 75 %"
-            description: "gistpin-staging memory request quota at {{ $value | humanizePercentage }}."
+            description: "vertexchain-staging memory request quota at {{ $value | humanizePercentage }}."
 
         - alert: StagingPodCountQuotaHigh
           expr: |
-            kube_resourcequota{namespace="gistpin-staging", resource="count/pods", type="used"}
-            / kube_resourcequota{namespace="gistpin-staging", resource="count/pods", type="hard"} > 0.75
+            kube_resourcequota{namespace="vertexchain-staging", resource="count/pods", type="used"}
+            / kube_resourcequota{namespace="vertexchain-staging", resource="count/pods", type="hard"} > 0.75
           for: 5m
           labels:
             severity: warning
             env: staging
           annotations:
             summary: "Staging pod count above 75 %"
-            description: "Pod quota in gistpin-staging at {{ $value | humanizePercentage }}."
+            description: "Pod quota in vertexchain-staging at {{ $value | humanizePercentage }}."
 
         - alert: StagingStorageQuotaHigh
           expr: |
-            kube_resourcequota{namespace="gistpin-staging", resource="requests.storage", type="used"}
-            / kube_resourcequota{namespace="gistpin-staging", resource="requests.storage", type="hard"} > 0.75
+            kube_resourcequota{namespace="vertexchain-staging", resource="requests.storage", type="used"}
+            / kube_resourcequota{namespace="vertexchain-staging", resource="requests.storage", type="hard"} > 0.75
           for: 10m
           labels:
             severity: warning
             env: staging
           annotations:
             summary: "Staging storage quota above 75 %"
-            description: "Storage quota in gistpin-staging at {{ $value | humanizePercentage }}."
+            description: "Storage quota in vertexchain-staging at {{ $value | humanizePercentage }}."
 
         # Staging-specific: alert on any quota-exceeded event immediately
         - alert: StagingQuotaExceeded
           expr: |
-            kube_resourcequota{namespace="gistpin-staging", type="used"}
-            >= kube_resourcequota{namespace="gistpin-staging", type="hard"}
+            kube_resourcequota{namespace="vertexchain-staging", type="used"}
+            >= kube_resourcequota{namespace="vertexchain-staging", type="hard"}
           for: 1m
           labels:
             severity: critical
             env: staging
           annotations:
             summary: "Staging quota hard limit hit for {{ $labels.resource }}"
-            description: "Resource {{ $labels.resource }} has hit its hard quota in gistpin-staging. New pods/PVCs may be rejected."
+            description: "Resource {{ $labels.resource }} has hit its hard quota in vertexchain-staging. New pods/PVCs may be rejected."

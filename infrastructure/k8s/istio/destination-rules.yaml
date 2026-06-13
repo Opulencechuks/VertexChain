@@ -1,6 +1,6 @@
 ---
 # ──────────────────────────────────────────────────────────────────────────────
-# GistPin — Destination Rules
+# VertexChain — Destination Rules
 #
 # Configures:
 #   - Load balancing algorithm per service
@@ -15,7 +15,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
   name: backend
-  namespace: gistpin
+  namespace: vertexchain
 spec:
   host: backend
   trafficPolicy:
@@ -71,7 +71,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
   name: frontend
-  namespace: gistpin
+  namespace: vertexchain
 spec:
   host: frontend
   trafficPolicy:
@@ -111,7 +111,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
   name: analytics
-  namespace: gistpin
+  namespace: vertexchain
 spec:
   host: analytics
   trafficPolicy:
@@ -149,7 +149,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
   name: stellar-rpc-egress-tls
-  namespace: gistpin
+  namespace: vertexchain
 spec:
   host: istio-egressgateway.istio-system.svc.cluster.local
   trafficPolicy:
@@ -167,7 +167,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: ServiceEntry
 metadata:
   name: stellar-rpc
-  namespace: gistpin
+  namespace: vertexchain
 spec:
   hosts:
     - horizon.stellar.org

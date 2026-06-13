@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: custom-metrics-config
-  namespace: gistpin-prod
+  namespace: vertexchain-prod
 data:
   metrics.yaml: |
     rules:

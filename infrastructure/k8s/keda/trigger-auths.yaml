@@ -1,4 +1,4 @@
-# KEDA TriggerAuthentication and ClusterTriggerAuthentication — GistPin
+# KEDA TriggerAuthentication and ClusterTriggerAuthentication — VertexChain
 # Defines authentication for external scalers: AWS, Prometheus, and database
 
 ---
@@ -7,14 +7,14 @@ apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: aws-sqs-auth
-  namespace: gistpin-prod
+  namespace: vertexchain-prod
   labels:
     app.kubernetes.io/name: keda-trigger-auth
-    app.kubernetes.io/part-of: gistpin
+    app.kubernetes.io/part-of: vertexchain
 spec:
   podIdentity:
     provider: aws
-    roleArn: arn:aws:iam::123456789012:role/gistpin-keda-sqs-role
+    roleArn: arn:aws:iam::123456789012:role/vertexchain-keda-sqs-role
 
 ---
 # AWS CloudWatch trigger authentication
@@ -22,14 +22,14 @@ apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: aws-cloudwatch-auth
-  namespace: gistpin-prod
+  namespace: vertexchain-prod
   labels:
     app.kubernetes.io/name: keda-trigger-auth
-    app.kubernetes.io/part-of: gistpin
+    app.kubernetes.io/part-of: vertexchain
 spec:
   podIdentity:
     provider: aws
-    roleArn: arn:aws:iam::123456789012:role/gistpin-keda-cw-role
+    roleArn: arn:aws:iam::123456789012:role/vertexchain-keda-cw-role
 
 ---
 # Prometheus trigger authentication (scrape from within cluster)
@@ -38,10 +38,10 @@ apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: prometheus-auth
-  namespace: gistpin-prod
+  namespace: vertexchain-prod
   labels:
     app.kubernetes.io/name: keda-trigger-auth
-    app.kubernetes.io/part-of: gistpin
+    app.kubernetes.io/part-of: vertexchain
 spec: {}
 
 ---
@@ -50,14 +50,14 @@ apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: postgres-auth
-  namespace: gistpin-prod
+  namespace: vertexchain-prod
   labels:
     app.kubernetes.io/name: keda-trigger-auth
-    app.kubernetes.io/part-of: gistpin
+    app.kubernetes.io/part-of: vertexchain
 spec:
   secretTargetRef:
     - parameter: connection
-      name: gistpin-db-credentials
+      name: vertexchain-db-credentials
       key: connection-string
 
 ---
@@ -66,10 +66,10 @@ apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: rabbitmq-auth
-  namespace: gistpin-prod
+  namespace: vertexchain-prod
   labels:
     app.kubernetes.io/name: keda-trigger-auth
-    app.kubernetes.io/part-of: gistpin
+    app.kubernetes.io/part-of: vertexchain
 spec:
   secretTargetRef:
     - parameter: host

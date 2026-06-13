@@ -2,16 +2,16 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "gistpin.fullname" . }}-backend
+  name: {{ include "vertexchain.fullname" . }}-backend
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "gistpin.labels" . | nindent 4 }}
+    {{- include "vertexchain.labels" . | nindent 4 }}
     app.kubernetes.io/component: backend
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "gistpin.fullname" . }}-backend
+    name: {{ include "vertexchain.fullname" . }}-backend
   minReplicas: {{ .Values.backend.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.backend.autoscaling.maxReplicas }}
   metrics:
