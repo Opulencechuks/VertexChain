@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""GistPin usage forecasting — linear trend projection from CloudWatch metrics."""
+"""VertexChain usage forecasting — linear trend projection from CloudWatch metrics."""
 
 import argparse
 import json
@@ -13,10 +13,10 @@ except ImportError:
     sys.exit(1)
 
 METRICS = [
-    ("ContainerInsights", "node_cpu_utilization", [{"Name": "ClusterName", "Value": "gistpin"}]),
-    ("ContainerInsights", "node_memory_utilization", [{"Name": "ClusterName", "Value": "gistpin"}]),
-    ("AWS/RDS", "DatabaseConnections", [{"Name": "DBInstanceIdentifier", "Value": "gistpin-db"}]),
-    ("AWS/RDS", "FreeStorageSpace", [{"Name": "DBInstanceIdentifier", "Value": "gistpin-db"}]),
+    ("ContainerInsights", "node_cpu_utilization", [{"Name": "ClusterName", "Value": "vertexchain"}]),
+    ("ContainerInsights", "node_memory_utilization", [{"Name": "ClusterName", "Value": "vertexchain"}]),
+    ("AWS/RDS", "DatabaseConnections", [{"Name": "DBInstanceIdentifier", "Value": "vertexchain-db"}]),
+    ("AWS/RDS", "FreeStorageSpace", [{"Name": "DBInstanceIdentifier", "Value": "vertexchain-db"}]),
 ]
 
 
@@ -66,7 +66,7 @@ def recommend(metric_name, current, forecast):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="GistPin usage forecast")
+    parser = argparse.ArgumentParser(description="VertexChain usage forecast")
     parser.add_argument("--region", default="us-east-1")
     parser.add_argument("--days", type=int, default=30, help="Historical days to analyse")
     parser.add_argument("--forecast-days", type=int, default=90, help="Days to forecast ahead")
@@ -91,7 +91,7 @@ def main():
     if args.output == "json":
         print(json.dumps(results, indent=2))
     else:
-        print(f"\n=== GistPin Usage Forecast ({args.forecast_days}-day projection) ===\n")
+        print(f"\n=== VertexChain Usage Forecast ({args.forecast_days}-day projection) ===\n")
         for r in results:
             print(f"  {r['metric']}")
             print(f"    Current:     {r['current']}")

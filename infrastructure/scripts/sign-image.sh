@@ -68,7 +68,7 @@ fi
 log "Attesting SBOM..."
 cosign attest \
   --key "${KEY_FILE}" \
-  --predicate <(echo '{"builder":"gistpin-ci","build_type":"docker"}') \
+  --predicate <(echo '{"builder":"vertexchain-ci","build_type":"docker"}') \
   --type custom \
   "${IMAGE}" 2>/dev/null || log "SBOM attestation skipped (optional)"
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Automated security hardening for GistPin infrastructure
+# Automated security hardening for VertexChain infrastructure
 set -euo pipefail
 
 CONFIG="${1:-infrastructure/security/hardening-config.yml}"
@@ -53,7 +53,7 @@ fi
 # --- Service Account Cleanup ---
 log "==> Service account audit..."
 if command -v kubectl &>/dev/null; then
-  NAMESPACE="${NAMESPACE:-gistpin}"
+  NAMESPACE="${NAMESPACE:-vertexchain}"
   kubectl get serviceaccounts -n "$NAMESPACE" --no-headers 2>/dev/null | \
     awk '{print $1}' | grep -v "^default$" | while read -r sa; do
       log "    Found SA: $sa"

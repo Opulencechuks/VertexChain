@@ -14,5 +14,5 @@ else
 fi
 
 echo "Switching traffic from ${ACTIVE_ENV} to ${NEW_ENV}"
-echo "${NEW_ENV}" > /tmp/gistpin-active-environment
+echo "${NEW_ENV}" > /tmp/vertexchain-active-environment
 echo "Traffic switched to ${NEW_ENV}"

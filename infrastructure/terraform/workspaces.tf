@@ -25,7 +25,7 @@ locals {
 variable "app_name" {
   description = "Application name"
   type        = string
-  default     = "gistpin"
+  default     = "vertexchain"
 }
 
 output "workspace_name" {

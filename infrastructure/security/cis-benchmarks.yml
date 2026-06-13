@@ -1,5 +1,5 @@
 ---
-# CIS Benchmark definitions for GistPin infrastructure compliance checks.
+# CIS Benchmark definitions for VertexChain infrastructure compliance checks.
 # Each entry maps to a check in compliance-checks.sh.
 
 version: "1.0"

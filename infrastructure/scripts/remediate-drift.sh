@@ -4,13 +4,13 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TERRAFORM_DIR="${SCRIPT_DIR}/../terraform"
 LOG_DIR="${SCRIPT_DIR}/../logs"
-STATE_BUCKET="gistpin-terraform-state"
-STATE_KEY="gistpin/terraform.tfstate"
-LOCK_TABLE="gistpin-terraform-locks"
+STATE_BUCKET="vertexchain-terraform-state"
+STATE_KEY="vertexchain/terraform.tfstate"
+LOCK_TABLE="vertexchain-terraform-locks"
 LOCK_ID="drift-remediation-lock"
 LOCK_TTL=3600
 NOTIFICATION_WEBHOOK="${NOTIFICATION_WEBHOOK:-}"
-GITHUB_REPO="${GITHUB_REPO:-PinSpace-Org/GistPin}"
+GITHUB_REPO="${GITHUB_REPO:-PinSpace-Org/VertexChain}"
 APPROVAL_TIMEOUT="${APPROVAL_TIMEOUT:-3600}"
 
 RED='\033[0;31m'

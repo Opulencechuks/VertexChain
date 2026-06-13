@@ -1,10 +1,10 @@
-"""Locust load test for GistPin API.
+"""Locust load test for VertexChain API.
 Run: locust -f infrastructure/scripts/load-tests/locustfile.py --host=http://localhost:3000
 """
 from locust import HttpUser, task, between
 
 
-class GistPinUser(HttpUser):
+class VertexChainUser(HttpUser):
     wait_time = between(1, 3)
 
     @task(3)

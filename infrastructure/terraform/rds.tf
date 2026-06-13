@@ -22,8 +22,8 @@ resource "aws_db_instance" "postgres" {
   allocated_storage = 20
   storage_encrypted = true
 
-  db_name  = "gistpin"
-  username = "gistpin"
+  db_name  = "vertexchain"
+  username = "vertexchain"
   password = var.db_password
 
   db_subnet_group_name   = aws_db_subnet_group.postgres.name

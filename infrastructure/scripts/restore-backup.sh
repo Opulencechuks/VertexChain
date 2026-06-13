@@ -6,7 +6,7 @@ set -euo pipefail
 
 BACKUP_ID="${1:?Usage: $0 <backup-id> <target-db>}"
 TARGET_DB="${2:?Usage: $0 <backup-id> <target-db>}"
-BACKUP_DIR="${BACKUP_DIR:-/var/backups/gistpin}"
+BACKUP_DIR="${BACKUP_DIR:-/var/backups/vertexchain}"
 BACKUP_FILE="$BACKUP_DIR/${BACKUP_ID}.dump"
 
 log() { echo "[$(date +%H:%M:%S)] $*"; }

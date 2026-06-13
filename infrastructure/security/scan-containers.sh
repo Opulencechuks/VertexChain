@@ -6,9 +6,9 @@ set -euo pipefail
 
 TAG="${1:-latest}"
 IMAGES=(
-  "gistpin-backend:$TAG"
-  "gistpin-frontend:$TAG"
-  "gistpin-postgres:$TAG"
+  "vertexchain-backend:$TAG"
+  "vertexchain-frontend:$TAG"
+  "vertexchain-postgres:$TAG"
 )
 REPORT_DIR="${REPORT_DIR:-/tmp/security-reports}"
 mkdir -p "$REPORT_DIR"

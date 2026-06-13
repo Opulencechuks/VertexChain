@@ -2,7 +2,7 @@
 set -euo pipefail
 
 BACKUP_FILE="${1:-}"
-TEST_DB_URL="${TEST_DB_URL:-postgres://postgres:postgres@localhost:5432/gistpin_backup_test}"
+TEST_DB_URL="${TEST_DB_URL:-postgres://postgres:postgres@localhost:5432/vertexchain_backup_test}"
 SQL_CHECKS="infrastructure/ci/backup-tests/integrity-checks.sql"
 
 if [[ -z "${BACKUP_FILE}" ]]; then

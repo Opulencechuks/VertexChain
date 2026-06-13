@@ -2,7 +2,7 @@
 set -euo pipefail
 
 TARGET="${1:-}"
-SERVICE="${2:-gistpin-service}"
+SERVICE="${2:-vertexchain-service}"
 NAMESPACE="${3:-default}"
 
 if [[ "$TARGET" != "blue" && "$TARGET" != "green" ]]; then
@@ -12,5 +12,5 @@ fi
 
 echo "Switching $SERVICE in namespace $NAMESPACE to version: $TARGET"
 kubectl patch service "$SERVICE" -n "$NAMESPACE" \
-  -p "{\"spec\":{\"selector\":{\"app\":\"gistpin\",\"version\":\"$TARGET\"}}}"
+  -p "{\"spec\":{\"selector\":{\"app\":\"vertexchain\",\"version\":\"$TARGET\"}}}"
 echo "Done. Active slot: $TARGET"

@@ -43,7 +43,7 @@ resource "aws_wafv2_web_acl" "app_waf" {
 
 variable "app_name" {
   type    = string
-  default = "gistpin"
+  default = "vertexchain"
 }
 
 variable "environment" {

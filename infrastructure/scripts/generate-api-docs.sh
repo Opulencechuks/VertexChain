@@ -21,7 +21,7 @@ cat > "${spec_output}" <<EOF
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "GistPin API",
+    "title": "VertexChain API",
     "version": "${version}"
   },
   "paths": {}
@@ -31,9 +31,9 @@ EOF
 cat > "${site_output}/index.html" <<EOF
 <!doctype html>
 <html>
-  <head><meta charset="utf-8"><title>GistPin API Docs</title></head>
+  <head><meta charset="utf-8"><title>VertexChain API Docs</title></head>
   <body>
-    <h1>GistPin API Documentation</h1>
+    <h1>VertexChain API Documentation</h1>
     <p>Version: ${version}</p>
     <pre id="spec"></pre>
     <script>

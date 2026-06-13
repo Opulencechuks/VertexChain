@@ -12,7 +12,7 @@ locals {
 variable "project_name" {
   description = "Project name for cost allocation"
   type        = string
-  default     = "gistpin"
+  default     = "vertexchain"
 }
 
 variable "environment" {

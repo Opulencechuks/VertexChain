@@ -1,5 +1,5 @@
 ---
-# Network traffic rules for GistPin.
+# Network traffic rules for VertexChain.
 # Used by analyze-traffic.sh to validate flow logs against expected behaviour.
 
 version: "1.0"

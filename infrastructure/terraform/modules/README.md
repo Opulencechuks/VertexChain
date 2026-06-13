@@ -1,6 +1,6 @@
 # Terraform Modules
 
-Reusable Terraform modules for GistPin infrastructure.
+Reusable Terraform modules for VertexChain infrastructure.
 
 ## Structure
 
@@ -16,7 +16,7 @@ modules/
 ```hcl
 module "vpc" {
   source = "./modules/vpc"
-  name   = "gistpin-prod"
+  name   = "vertexchain-prod"
   cidr   = "10.0.0.0/16"
 }
 

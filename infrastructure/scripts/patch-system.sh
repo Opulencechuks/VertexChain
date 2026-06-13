@@ -3,14 +3,14 @@ set -euo pipefail
 
 ENVIRONMENT="${ENVIRONMENT:-staging}"
 DRY_RUN="${DRY_RUN:-true}"
-NAMESPACE="${NAMESPACE:-gistpin}"
+NAMESPACE="${NAMESPACE:-vertexchain}"
 PATCH_LOG="/tmp/patch-$(date +%Y%m%d-%H%M%S).log"
 ROLLBACK_SNAPSHOT=""
 
 log() { echo "[$(date +%H:%M:%S)] $*" | tee -a "${PATCH_LOG}"; }
 fail() { log "ERROR: $*"; exit 1; }
 
-log "=== GistPin Patch System ==="
+log "=== VertexChain Patch System ==="
 log "Environment: ${ENVIRONMENT} | Dry-run: ${DRY_RUN}"
 
 # Step 1: Run assessment first
@@ -19,10 +19,10 @@ bash "$(dirname "$0")/assess-patches.sh" | tee -a "${PATCH_LOG}"
 
 # Step 2: Snapshot RDS before patching
 log "[2/5] Creating pre-patch RDS snapshot..."
-SNAPSHOT_ID="gistpin-pre-patch-$(date +%Y%m%d-%H%M%S)"
+SNAPSHOT_ID="vertexchain-pre-patch-$(date +%Y%m%d-%H%M%S)"
 if [[ "${DRY_RUN}" == "false" ]]; then
   aws rds create-db-snapshot \
-    --db-instance-identifier "gistpin-db-${ENVIRONMENT}" \
+    --db-instance-identifier "vertexchain-db-${ENVIRONMENT}" \
     --db-snapshot-identifier "${SNAPSHOT_ID}" \
     --region "${AWS_REGION:-us-east-1}"
   ROLLBACK_SNAPSHOT="${SNAPSHOT_ID}"
@@ -68,7 +68,7 @@ kubectl get pods -n "${NAMESPACE}" -o jsonpath='{range .items[*]}{.spec.containe
 log "[5/5] Generating compliance report..."
 if [[ "${DRY_RUN}" == "false" ]]; then
   aws ssm describe-instance-patch-states-for-patch-group \
-    --patch-group "gistpin-${ENVIRONMENT}" \
+    --patch-group "vertexchain-${ENVIRONMENT}" \
     --region "${AWS_REGION:-us-east-1}" \
     --query 'InstancePatchStates[].[InstanceId,PatchGroup,MissingCount,InstalledCount,FailedCount]' \
     --output table | tee -a "${PATCH_LOG}" || true

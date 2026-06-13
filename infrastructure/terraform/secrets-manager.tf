@@ -24,7 +24,7 @@ resource "aws_secretsmanager_secret_version" "app_secret_version" {
 variable "app_name" {
   description = "Application name"
   type        = string
-  default     = "gistpin"
+  default     = "vertexchain"
 }
 
 variable "environment" {

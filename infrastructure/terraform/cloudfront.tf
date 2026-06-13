@@ -1,7 +1,7 @@
 variable "domain_name" {
   description = "Custom domain name for CloudFront"
   type        = string
-  default     = "gistpin.io"
+  default     = "vertexchain.io"
 }
 
 resource "aws_cloudfront_distribution" "frontend" {

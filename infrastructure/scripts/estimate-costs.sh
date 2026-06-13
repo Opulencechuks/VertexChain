@@ -30,7 +30,7 @@ fi
 TOTAL_COST=$(jq -r '.totalMonthlyCost // .projects[].breakdown.totalMonthlyCost // 0' "${INFRACOST_JSON}" 2>/dev/null | head -1 || echo "0")
 
 log "============================================"
-log "  GistPin Cost Estimation"
+log "  VertexChain Cost Estimation"
 log "  Estimated Monthly Cost: \$${TOTAL_COST}"
 log "============================================"
 

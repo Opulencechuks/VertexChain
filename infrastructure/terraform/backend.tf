@@ -1,9 +1,9 @@
 terraform {
   backend "s3" {
-    bucket         = "gistpin-terraform-state"
-    key            = "gistpin/terraform.tfstate"
+    bucket         = "vertexchain-terraform-state"
+    key            = "vertexchain/terraform.tfstate"
     region         = "us-east-1"
-    dynamodb_table = "gistpin-terraform-locks"
+    dynamodb_table = "vertexchain-terraform-locks"
     encrypt        = true
   }
 }

@@ -3,7 +3,7 @@
 set -euo pipefail
 
 EXPERIMENT="${1:-pod-failure}"
-NAMESPACE="${NAMESPACE:-gistpin}"
+NAMESPACE="${NAMESPACE:-vertexchain}"
 DURATION="${DURATION:-60}"
 
 echo "==> Starting chaos experiment: $EXPERIMENT (namespace=$NAMESPACE, duration=${DURATION}s)"

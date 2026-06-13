@@ -4,7 +4,7 @@ Infrastructure as Code for cloud resource provisioning.
 
 ## Overview
 
-Terraform modules for provisioning cloud infrastructure for GistPin.
+Terraform modules for provisioning cloud infrastructure for VertexChain.
 
 ## Contents
 

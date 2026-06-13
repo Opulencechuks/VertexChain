@@ -5,7 +5,7 @@ set -euo pipefail
 # Usage: ./test-backup.sh [backup-id]
 
 BACKUP_ID="${1:-latest}"
-TEST_DB="gistpin_backup_test"
+TEST_DB="vertexchain_backup_test"
 LOG_FILE="/tmp/backup-test-$(date +%Y%m%d-%H%M%S).log"
 
 log() { echo "[$(date +%H:%M:%S)] $*" | tee -a "$LOG_FILE"; }

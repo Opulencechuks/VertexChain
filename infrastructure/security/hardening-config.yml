@@ -20,7 +20,7 @@ firewall:
       comment: HTTPS
 
 service_accounts:
-  namespace: gistpin
+  namespace: vertexchain
   audit_only: true
 
 permissions:

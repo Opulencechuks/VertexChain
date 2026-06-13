@@ -1,7 +1,7 @@
 variable "api_domain" {
   description = "API domain for CloudFront origin"
   type        = string
-  default     = "api.gistpin.io"
+  default     = "api.vertexchain.io"
 }
 
 locals {

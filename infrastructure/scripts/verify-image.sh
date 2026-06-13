@@ -41,7 +41,7 @@ else
   log "No public key found, attempting keyless verification..."
   cosign verify \
     --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
-    --certificate-identity "https://github.com/PinSpace-Org/GistPin/.github/workflows/" \
+    --certificate-identity "https://github.com/PinSpace-Org/VertexChain/.github/workflows/" \
     "${IMAGE}" || {
     log "Keyless verification failed — image may be unsigned or signed with a different identity"
     exit 1

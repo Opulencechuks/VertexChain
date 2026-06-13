@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_metric_alarm" "cpu_high" {
-  alarm_name          = "gistpin-cpu-high"
+  alarm_name          = "vertexchain-cpu-high"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 2
   metric_name         = "CPUUtilization"
@@ -7,11 +7,11 @@ resource "aws_cloudwatch_metric_alarm" "cpu_high" {
   period              = 300
   statistic           = "Average"
   threshold           = 80
-  alarm_actions       = [aws_sns_topic.gistpin_alerts.arn]
+  alarm_actions       = [aws_sns_topic.vertexchain_alerts.arn]
 }
 
 resource "aws_cloudwatch_metric_alarm" "memory_high" {
-  alarm_name          = "gistpin-memory-high"
+  alarm_name          = "vertexchain-memory-high"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 2
   metric_name         = "MemoryUtilization"
@@ -19,11 +19,11 @@ resource "aws_cloudwatch_metric_alarm" "memory_high" {
   period              = 300
   statistic           = "Average"
   threshold           = 80
-  alarm_actions       = [aws_sns_topic.gistpin_alerts.arn]
+  alarm_actions       = [aws_sns_topic.vertexchain_alerts.arn]
 }
 
 resource "aws_cloudwatch_metric_alarm" "errors_high" {
-  alarm_name          = "gistpin-errors-high"
+  alarm_name          = "vertexchain-errors-high"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 1
   metric_name         = "5XXError"
@@ -31,5 +31,5 @@ resource "aws_cloudwatch_metric_alarm" "errors_high" {
   period              = 60
   statistic           = "Sum"
   threshold           = 10
-  alarm_actions       = [aws_sns_topic.gistpin_alerts.arn]
+  alarm_actions       = [aws_sns_topic.vertexchain_alerts.arn]
 }

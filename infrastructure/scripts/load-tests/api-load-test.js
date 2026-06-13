@@ -1,4 +1,4 @@
-// k6 load test for GistPin API
+// k6 load test for VertexChain API
 // Run: k6 run infrastructure/scripts/load-tests/api-load-test.js
 import http from 'k6/http';
 import { check, sleep } from 'k6';

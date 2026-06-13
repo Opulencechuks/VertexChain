@@ -1,5 +1,5 @@
-resource "aws_route53_health_check" "gistpin_api" {
-  fqdn              = "api.gistpin.io"
+resource "aws_route53_health_check" "vertexchain_api" {
+  fqdn              = "api.vertexchain.io"
   port              = 443
   type              = "HTTPS"
   resource_path     = "/health"

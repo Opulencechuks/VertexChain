@@ -12,7 +12,7 @@ variable "environment" {
 variable "project_name" {
   description = "Project name"
   type        = string
-  default     = "gistpin"
+  default     = "vertexchain"
 }
 
 variable "vpc_id" {

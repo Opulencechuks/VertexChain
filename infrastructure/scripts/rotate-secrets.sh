@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# rotate-secrets.sh — Zero-downtime secret rotation for GistPin
+# rotate-secrets.sh — Zero-downtime secret rotation for VertexChain
 # Usage: ./rotate-secrets.sh [db|api|cert|all]
 
 TARGET="${1:-all}"
-AUDIT_LOG="/var/log/gistpin/secret-rotation-$(date +%Y%m%d-%H%M%S).log"
+AUDIT_LOG="/var/log/vertexchain/secret-rotation-$(date +%Y%m%d-%H%M%S).log"
 mkdir -p "$(dirname "$AUDIT_LOG")"
 
 log() { echo "[$(date +%H:%M:%S)] $*" | tee -a "$AUDIT_LOG"; }
@@ -15,13 +15,13 @@ rotate_db_password() {
   NEW_PASS=$(openssl rand -base64 32)
   # Update in AWS Secrets Manager
   aws secretsmanager update-secret \
-    --secret-id gistpin/db/password \
+    --secret-id vertexchain/db/password \
     --secret-string "$NEW_PASS"
   # Update PostgreSQL user
-  psql -c "ALTER USER gistpin PASSWORD '$NEW_PASS';"
+  psql -c "ALTER USER vertexchain PASSWORD '$NEW_PASS';"
   # Restart backend pods to pick up new secret (zero-downtime rolling restart)
-  kubectl rollout restart deployment/gistpin-backend
-  kubectl rollout status deployment/gistpin-backend --timeout=120s
+  kubectl rollout restart deployment/vertexchain-backend
+  kubectl rollout status deployment/vertexchain-backend --timeout=120s
   log "Database password rotated successfully"
 }
 
@@ -29,17 +29,17 @@ rotate_api_keys() {
   log "Rotating API keys..."
   NEW_KEY=$(openssl rand -hex 32)
   aws secretsmanager update-secret \
-    --secret-id gistpin/api/key \
+    --secret-id vertexchain/api/key \
     --secret-string "$NEW_KEY"
-  kubectl rollout restart deployment/gistpin-backend
-  kubectl rollout status deployment/gistpin-backend --timeout=120s
+  kubectl rollout restart deployment/vertexchain-backend
+  kubectl rollout status deployment/vertexchain-backend --timeout=120s
   log "API keys rotated successfully"
 }
 
 rotate_certificates() {
   log "Rotating TLS certificates..."
   # Trigger cert-manager renewal
-  kubectl annotate certificate gistpin-tls \
+  kubectl annotate certificate vertexchain-tls \
     cert-manager.io/issuer-kind=ClusterIssuer \
     --overwrite
   log "Certificate renewal triggered"

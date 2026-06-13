@@ -2,7 +2,7 @@
 # Validate that all expected k8s services and deployments are healthy
 set -euo pipefail
 
-NAMESPACE="${NAMESPACE:-gistpin}"
+NAMESPACE="${NAMESPACE:-vertexchain}"
 PASS=0; FAIL=0
 
 log()  { echo "[$(date -u +%H:%M:%S)] $*"; }

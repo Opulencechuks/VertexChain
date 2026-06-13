@@ -1,4 +1,4 @@
-# Infracost Configuration — GistPin
+# Infracost Configuration — VertexChain
 # Defines cost estimation settings and budget thresholds
 
 version: 0.1
@@ -7,7 +7,7 @@ currency: USD
 
 projects:
   - path: infrastructure/terraform
-    name: gistpin-infrastructure
+    name: vertexchain-infrastructure
     terraform_workspace: production
 
 budget_thresholds:
@@ -43,7 +43,7 @@ budget_thresholds:
 
 cost_alerts:
   slack_channel: "#infra-alerts"
-  email: infra@gistpin.io
+  email: infra@vertexchain.io
 
 # Resources whose cost changes should trigger extra review
 highlight_threshold:

@@ -17,4 +17,4 @@ reports:
 
 notifications:
   slack_channel: "#security-alerts"
-  email: security@gistpin.io
+  email: security@vertexchain.io
