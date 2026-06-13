@@ -1,6 +1,6 @@
-# GistPin Infrastructure
+# VertexChain Infrastructure
 
-This directory contains infrastructure configuration, deployment scripts, and DevOps tooling for the GistPin platform.
+This directory contains infrastructure configuration, deployment scripts, and DevOps tooling for the VertexChain platform.
 
 ## Structure
 
@@ -17,7 +17,7 @@ infrastructure/
 
 ## Overview
 
-Infrastructure components for deploying and managing GistPin across environments.
+Infrastructure components for deploying and managing VertexChain across environments.
 
 ### Components
 

@@ -67,9 +67,9 @@ HORIZON_URL = os.environ.get("STELLAR_HORIZON_URL", "https://horizon-testnet.ste
 
 # Contract IDs (32-byte hex) — replace with deployed contract addresses
 CONTRACT_IDS = {
-    "vertexchain-registry": os.environ.get("GISTPIN_REGISTRY_CONTRACT", ""),
-    "vertexchain-store": os.environ.get("GISTPIN_STORE_CONTRACT", ""),
-    "vertexchain-rewards": os.environ.get("GISTPIN_REWARDS_CONTRACT", ""),
+    "vertexchain-registry": os.environ.get("VERTEXCHAIN_REGISTRY_CONTRACT", ""),
+    "vertexchain-store": os.environ.get("VERTEXCHAIN_STORE_CONTRACT", ""),
+    "vertexchain-rewards": os.environ.get("VERTEXCHAIN_REWARDS_CONTRACT", ""),
 }
 
 
@@ -155,8 +155,8 @@ def main():
 
     if not any(CONTRACT_IDS.values()):
         print(
-            "No contract IDs configured — set GISTPIN_REGISTRY_CONTRACT, "
-            "GISTPIN_STORE_CONTRACT, GISTPIN_REWARDS_CONTRACT env vars. "
+            "No contract IDs configured — set VERTEXCHAIN_REGISTRY_CONTRACT, "
+            "VERTEXCHAIN_STORE_CONTRACT, VERTEXCHAIN_REWARDS_CONTRACT env vars. "
             "Running with IPFS-only metrics.",
             file=sys.stderr,
         )
