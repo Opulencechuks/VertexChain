@@ -1,5 +1,3 @@
-import Papa from 'papaparse';
-
 export type CsvValue = string | number | boolean | null | undefined;
 export type CsvRow = Record<string, CsvValue>;
 
@@ -101,6 +99,13 @@ export async function exportRowsToCsv({
         await yieldToBrowser();
       }
     }
+  }
+
+  let Papa: typeof import('papaparse').default;
+  try {
+    Papa = (await import('papaparse')).default;
+  } catch {
+    throw new Error('Failed to load CSV export library. Please try again.');
   }
 
   const csv = Papa.unparse(output);
